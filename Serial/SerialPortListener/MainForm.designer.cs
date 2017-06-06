@@ -42,14 +42,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnStart = new System.Windows.Forms.Button();
             this.tbData = new System.Windows.Forms.TextBox();
-            this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.btnStop = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             baudRateLabel = new System.Windows.Forms.Label();
             dataBitsLabel = new System.Windows.Forms.Label();
             parityLabel = new System.Windows.Forms.Label();
             portNameLabel = new System.Windows.Forms.Label();
             stopBitsLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -155,7 +158,7 @@
             this.groupBox1.Controls.Add(portNameLabel);
             this.groupBox1.Controls.Add(parityLabel);
             this.groupBox1.Controls.Add(this.parityComboBox);
-            this.groupBox1.Location = new System.Drawing.Point(110, 12);
+            this.groupBox1.Location = new System.Drawing.Point(10, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(217, 171);
             this.groupBox1.TabIndex = 11;
@@ -174,19 +177,15 @@
             // 
             // tbData
             // 
-            this.tbData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.tbData.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.tbData.Location = new System.Drawing.Point(12, 260);
             this.tbData.Multiline = true;
             this.tbData.Name = "tbData";
             this.tbData.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbData.Size = new System.Drawing.Size(431, 199);
+            this.tbData.Size = new System.Drawing.Size(452, 199);
             this.tbData.TabIndex = 13;
-            // 
-            // serialSettingsBindingSource
-            // 
-            this.serialSettingsBindingSource.DataSource = typeof(SerialPortListener.Serial.SerialSettings);
             // 
             // btnStop
             // 
@@ -198,11 +197,34 @@
             this.btnStop.UseVisualStyleBackColor = true;
             this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.comboBox1);
+            this.groupBox2.Location = new System.Drawing.Point(247, 12);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(217, 171);
+            this.groupBox2.TabIndex = 14;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "groupBox2";
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(39, 49);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.TabIndex = 0;
+            // 
+            // serialSettingsBindingSource
+            // 
+            this.serialSettingsBindingSource.DataSource = typeof(SerialPortListener.Serial.SerialSettings);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 475);
+            this.ClientSize = new System.Drawing.Size(476, 475);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
@@ -211,6 +233,7 @@
             this.Text = "RSLog Plus";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -229,6 +252,8 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.TextBox tbData;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox comboBox1;
     }
 }
 
