@@ -14,9 +14,13 @@ namespace SerialPortListener.Serial
     {
         public event PropertyChangedEventHandler PropertyChanged;
         string _portName = "";
+        string _outPortName = "";
         string[] _portNameCollection;
-        int _baudRate = 4800;
+        string[] _outPortNameCollection;
+        int _baudRate = 9600;
+      //  int _outBaudRate = 9600;
         BindingList<int> _baudRateCollection = new BindingList<int>();
+        BindingList<int> _outBaudRateCollection = new BindingList<int>();
         Parity _parity = Parity.None;
         int _dataBits = 8;
         int[] _dataBitsCollection = new int[] { 5, 6, 7, 8 };
@@ -35,6 +39,18 @@ namespace SerialPortListener.Serial
                 {
                     _portName = value;
                     SendPropertyChangedEvent("PortName");
+                }
+            }
+        }
+        public string OutPortName
+        {
+            get { return _outPortName; }
+            set
+            {
+                if (!_outPortName.Equals(value))
+                {
+                    _outPortName = value;
+                    SendPropertyChangedEvent("OutPortName");
                 }
             }
         }
@@ -108,11 +124,20 @@ namespace SerialPortListener.Serial
             get { return _portNameCollection; }
             set { _portNameCollection = value; }
         }
-
+        public string[] OutPortNameCollection
+        {
+            get { return _outPortNameCollection; }
+            set { _outPortNameCollection = value; }
+        }
         /// <summary>
         /// Available baud rates for current serial port
         /// </summary>
         public BindingList<int> BaudRateCollection
+        {
+            get { return _baudRateCollection; }
+        }
+
+        public BindingList<int> outBaudRateCollection
         {
             get { return _baudRateCollection; }
         }

@@ -19,11 +19,14 @@ namespace SerialPortListener.Serial
         {
             // Finding installed serial ports on hardware
             _currentSerialSettings.PortNameCollection = SerialPort.GetPortNames();
+            _currentSerialSettings.OutPortNameCollection = SerialPort.GetPortNames();
             _currentSerialSettings.PropertyChanged += new System.ComponentModel.PropertyChangedEventHandler(_currentSerialSettings_PropertyChanged);
 
             // If serial ports is found, we select the first found
             if (_currentSerialSettings.PortNameCollection.Length > 0)
                 _currentSerialSettings.PortName = _currentSerialSettings.PortNameCollection[0];
+            if (_currentSerialSettings.OutPortNameCollection.Length > 0)
+                _currentSerialSettings.OutPortName = _currentSerialSettings.OutPortNameCollection[0];
         }
 
         
@@ -34,8 +37,9 @@ namespace SerialPortListener.Serial
 
 
         #region Fields
-        private SerialPort _serialPort;
+        private SerialPort _serialPort, _outSerialPort;
         private SerialSettings _currentSerialSettings = new SerialSettings();
+     //   private SerialSettings _currentOutSerialSettings = new SerialSettings();
         private string _latestRecieved = String.Empty;
         public event EventHandler<SerialDataEventArgs> NewSerialDataRecieved; 
 
@@ -59,6 +63,8 @@ namespace SerialPortListener.Serial
         {
             // if serial port is changed, a new baud query is issued
             if (e.PropertyName.Equals("PortName"))
+                UpdateBaudRateCollection();
+            if (e.PropertyName.Equals("OutPortName"))
                 UpdateBaudRateCollection();
         }
 
@@ -100,14 +106,28 @@ namespace SerialPortListener.Serial
             // Subscribe to event and open serial port for data
             _serialPort.DataReceived += new SerialDataReceivedEventHandler(_serialPort_DataReceived);
             _serialPort.Open();
+            if (_outSerialPort != null && _outSerialPort.IsOpen)
+                _outSerialPort.Close();
+            _outSerialPort = new SerialPort(
+            _currentSerialSettings.OutPortName,
+            _currentSerialSettings.BaudRate,
+            _currentSerialSettings.Parity,
+            _currentSerialSettings.DataBits,
+            _currentSerialSettings.StopBits);
+            _outSerialPort.Open();
+            
         }
-
+        public void Write(string data)
+        {
+            _outSerialPort.Write(data + "\r\n");
+        }
         /// <summary>
         /// Closes the serial port
         /// </summary>
         public void StopListening()
         {
             _serialPort.Close();
+            _outSerialPort.Close();
         }
 
 

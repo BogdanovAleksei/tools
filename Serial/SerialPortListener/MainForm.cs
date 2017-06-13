@@ -8,6 +8,7 @@ using System.Text;
 using System.Windows.Forms;
 using SerialPortListener.Serial;
 using System.IO;
+using System.IO.Ports;
 
 namespace SerialPortListener
 {
@@ -27,11 +28,13 @@ namespace SerialPortListener
             _spManager = new SerialPortManager();
             SerialSettings mySerialSettings = _spManager.CurrentSerialSettings;
             serialSettingsBindingSource.DataSource = mySerialSettings;
-            portNameComboBox.DataSource = mySerialSettings.PortNameCollection;
-            baudRateComboBox.DataSource = mySerialSettings.BaudRateCollection;
-            dataBitsComboBox.DataSource = mySerialSettings.DataBitsCollection;
-            parityComboBox.DataSource = Enum.GetValues(typeof(System.IO.Ports.Parity));
-            stopBitsComboBox.DataSource = Enum.GetValues(typeof(System.IO.Ports.StopBits));
+            inPortNameComboBox.DataSource = mySerialSettings.PortNameCollection;
+            inBaudRateComboBox.DataSource = mySerialSettings.BaudRateCollection;
+            inDataBitsComboBox.DataSource = mySerialSettings.DataBitsCollection;
+            inParityComboBox.DataSource = Enum.GetValues(typeof(System.IO.Ports.Parity));
+            inStopBitsComboBox.DataSource = Enum.GetValues(typeof(System.IO.Ports.StopBits));
+            outPortNameComboBox.DataSource = mySerialSettings.OutPortNameCollection;
+            outBaudRateComboBox.DataSource = mySerialSettings.outBaudRateCollection;
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
@@ -58,7 +61,9 @@ namespace SerialPortListener
 
             // This application is connected to a GPS sending ASCCI characters, so data is converted to text
             string str = Encoding.ASCII.GetString(e.Data);
-            tbData.AppendText(str);
+            tbData.AppendText("Read on " + inPortNameComboBox.Text + " :" + str + "\r\n");
+            _spManager.Write(str);
+            tbData.AppendText("Write" + str + " to " + outPortNameComboBox.Text + "\r\n");
             tbData.ScrollToCaret();
 
         }
@@ -67,6 +72,7 @@ namespace SerialPortListener
         private void btnStart_Click(object sender, EventArgs e)
         {
             _spManager.StartListening();
+           // MessageBox.Show(_spManager.CurrentSerialSettings.OutPortName.ToString());
         }
 
         // Handles the "Stop Listening"-buttom click event
@@ -74,5 +80,7 @@ namespace SerialPortListener
         {
             _spManager.StopListening();
         }
+
+      
     }
 }
