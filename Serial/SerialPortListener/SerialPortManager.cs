@@ -15,8 +15,10 @@ namespace SerialPortListener.Serial
     /// </summary>
     public class SerialPortManager : IDisposable
     {
+        public string[] writeData = { };
         public SerialPortManager()
         {
+            
             // Finding installed serial ports on hardware
             _currentSerialSettings.PortNameCollection = SerialPort.GetPortNames();
             _currentSerialSettings.OutPortNameCollection = SerialPort.GetPortNames();
@@ -120,6 +122,67 @@ namespace SerialPortListener.Serial
         public void Write(string data)
         {
             _outSerialPort.Write(data + "\r\n");
+        }
+
+        public string Check(string data)
+        {
+            
+            string sPatternOk = "\\d{3}.\\d{3}";
+            string sPatternDis = "SEN 256";
+            string write = "";  
+       
+            ///
+            /// Тест сбора строки онлайн
+            /// 
+
+            Array.Resize(ref writeData, writeData.Length + 1);
+            writeData[writeData.Length - 1] = data;
+            foreach (string s in writeData)
+            {
+                write += s;
+            }
+            write = write.Replace("  ", string.Empty);
+            write = write.Replace(" ",",");
+            write = write.Replace("?", "#");
+            if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternOk))
+            {
+                Write(write + ";\r\n");
+                Array.Clear(writeData, 0, writeData.Length);
+                return (write + ";\r\n");
+            }
+            else if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternDis))
+            {
+                Write(write + ";\r\n");
+                Array.Clear(writeData, 0, writeData.Length);
+                return (write + ";\r\n");
+            }
+            else
+            {
+                return ("DEBUG: " + write + ";\r\n");
+            }
+            
+            /*
+            if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternOk))
+            {
+                Array.Resize(ref writeData, writeData.Length + 1);
+                writeData[writeData.Length -1] = data;
+                foreach (string s in writeData)
+                {
+                    write += s; 
+                }
+                Write(write + ";\r\n");
+                Array.Clear(writeData,0,writeData.Length);
+                return (write + ";\r\n");
+            }
+            else
+            {
+                Array.Resize(ref writeData, writeData.Length+1);
+                writeData[writeData.Length - 1] = data;
+             //   tbData.AppendText("Debug: " + (writeData.Length - 1) + " " + writeData[writeData.Length - 1] + "\r\n");
+                //  tbData.AppendText("Debug: " + i + "\r\n");
+                return ("Debug: " + writeData.Length.ToString() + data);
+            }
+            */
         }
         /// <summary>
         /// Closes the serial port

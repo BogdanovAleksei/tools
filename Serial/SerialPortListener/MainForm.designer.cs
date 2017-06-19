@@ -35,7 +35,6 @@
             System.Windows.Forms.Label portNameLabel;
             System.Windows.Forms.Label stopBitsLabel;
             this.inBaudRateComboBox = new System.Windows.Forms.ComboBox();
-            this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.inDataBitsComboBox = new System.Windows.Forms.ComboBox();
             this.inParityComboBox = new System.Windows.Forms.ComboBox();
             this.inPortNameComboBox = new System.Windows.Forms.ComboBox();
@@ -49,14 +48,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.outPotrNameLabel = new System.Windows.Forms.Label();
             this.outPortNameComboBox = new System.Windows.Forms.ComboBox();
+            this.button1 = new System.Windows.Forms.Button();
+            this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             baudRateLabel = new System.Windows.Forms.Label();
             dataBitsLabel = new System.Windows.Forms.Label();
             parityLabel = new System.Windows.Forms.Label();
             portNameLabel = new System.Windows.Forms.Label();
             stopBitsLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // baudRateLabel
@@ -112,10 +113,6 @@
             this.inBaudRateComboBox.Name = "inBaudRateComboBox";
             this.inBaudRateComboBox.Size = new System.Drawing.Size(121, 21);
             this.inBaudRateComboBox.TabIndex = 2;
-            // 
-            // serialSettingsBindingSource
-            // 
-            this.serialSettingsBindingSource.DataSource = typeof(SerialPortListener.Serial.SerialSettings);
             // 
             // inDataBitsComboBox
             // 
@@ -196,6 +193,7 @@
             // 
             // btnStop
             // 
+            this.btnStop.Enabled = false;
             this.btnStop.Location = new System.Drawing.Point(242, 215);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(85, 23);
@@ -236,7 +234,6 @@
             // 
             // outPotrNameLabel
             // 
-
             this.outPotrNameLabel.AutoSize = true;
             this.outPotrNameLabel.Location = new System.Drawing.Point(6, 32);
             this.outPotrNameLabel.Name = "outPotrNameLabel";
@@ -253,23 +250,41 @@
             this.outPortNameComboBox.Size = new System.Drawing.Size(121, 21);
             this.outPortNameComboBox.TabIndex = 0;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(366, 209);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // serialSettingsBindingSource
+            // 
+            this.serialSettingsBindingSource.DataSource = typeof(SerialPortListener.Serial.SerialSettings);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(476, 475);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.btnStart);
             this.Controls.Add(this.groupBox1);
+            this.MaximizeBox = false;
             this.Name = "MainForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "RSLog Plus";
-            ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.serialSettingsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -292,6 +307,7 @@
         private System.Windows.Forms.ComboBox outBaudRateComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label outPotrNameLabel;
+        private System.Windows.Forms.Button button1;
     }
 }
 
