@@ -97,38 +97,17 @@ namespace SerialPortListener
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string[] numbers = 
-        {
-            "$FREVE,CP SEN OK", 
-            " CU01LP0", 
-            "1AD37,KO", 
-            "       .3",
-            "YAR DP F",
-            "R052.052.", 
-            "$FREVE,RE SEN OF CU01LP0", 
-            "1AD06,TR", 
-            "ANSLYACI",
-            "ONNAY.3",
-            "YAR DP F",
-            "FR052.052", 
-        };
-            
-            /// <summary>
-            /// Pattern EOF "R000.000"
-            /// </summary>
-            string sPattern = "\\d{3}.\\d{3}";
-            foreach (string s in numbers)
+            string testsr = "$jsdhfkjhsd,123,sdjhgsafd,sadfsdf,8*";
+            byte summ = 0;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 1; i < testsr.Length-1; i++)
             {
-                if (System.Text.RegularExpressions.Regex.IsMatch(s, sPattern))
-                {
-                    tbData.AppendText(string.Format("{0,14} - Тут пишем \r\n", s));
-                }
-                else
-                {
-                    tbData.AppendText(string.Format("{0,14} - Тут НЕ пишем\r\n", s));
-                }
+                sb.Append((char)testsr[i]);
+                summ ^= Convert.ToByte(testsr[i]);
             }
-        }
+            String result = sb.ToString();
+            tbData.AppendText(result + "\r\n" + summ.ToString() );
+        }   
 
       
     }

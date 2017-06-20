@@ -128,7 +128,7 @@ namespace SerialPortListener.Serial
         {
             
             string sPatternOk = "\\d{3}.\\d{3}";
-            string sPatternDis = "SEN 256";
+            string sPatternDis = "$FREVE,SEN \\d{3}";
             string write = "";  
        
             ///
@@ -136,7 +136,20 @@ namespace SerialPortListener.Serial
             /// 
 
             Array.Resize(ref writeData, writeData.Length + 1);
-            writeData[writeData.Length - 1] = data;
+            if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternDis))
+            {
+                writeData[writeData.Length - 1] = "$FREVE,SEN*";
+            }
+            else if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternOk))
+            { 
+                System.Text.RegularExpressions.Regex rgx = new System.Text.RegularExpressions.Regex(".\\d{3}");
+                string result = rgx.Replace(data, "*");
+                writeData[writeData.Length - 1] = result;
+            }
+            else
+            {
+                writeData[writeData.Length - 1] = data;
+            }
             foreach (string s in writeData)
             {
                 write += s;
@@ -146,19 +159,35 @@ namespace SerialPortListener.Serial
             write = write.Replace("?", "#");
             if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternOk))
             {
-                Write(write + ";\r\n");
+                byte summ = 0;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 1; i < write.Length - 1; i++)
+                {
+                    sb.Append((char)write[i]);
+                    summ ^= Convert.ToByte(write[i]);
+                }
+                write = sb.ToString();
+                Write(write + "<CR><LF>\r\n");
                 Array.Clear(writeData, 0, writeData.Length);
-                return (write + ";\r\n");
+                return ("\r\n" + write + "<CR><LF>\r\n");
             }
             else if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternDis))
             {
-                Write(write + ";\r\n");
+                byte summ = 0;
+                StringBuilder sb = new StringBuilder();
+                for (int i = 1; i < write.Length - 1; i++)
+                {
+                    sb.Append((char)write[i]);
+                    summ ^= Convert.ToByte(write[i]);
+                }
+                write = sb.ToString();
+                Write(write + "<CR><LF>\r\n");
                 Array.Clear(writeData, 0, writeData.Length);
-                return (write + ";\r\n");
+                return ("\r\n" + write + "<CR><LF>\r\n");
             }
             else
             {
-                return ("DEBUG: " + write + ";\r\n");
+                return (".");
             }
             
             /*
