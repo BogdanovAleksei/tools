@@ -20,6 +20,7 @@ namespace SerialPortListener
             InitializeComponent();
 
             UserInitialization();
+
         }
 
       
@@ -38,6 +39,7 @@ namespace SerialPortListener
 
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
+
         }
 
         
@@ -107,6 +109,15 @@ namespace SerialPortListener
             }
             String result = sb.ToString();
             tbData.AppendText(result + "\r\n" + summ.ToString() );
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            if (inPortNameComboBox.Text == "COM3" && outPortNameComboBox.Text == "COM2")
+            {
+                btnStart.Enabled = false;
+                _spManager.StartListening();
+            }
         }   
 
       

@@ -128,7 +128,7 @@ namespace SerialPortListener.Serial
         {
             
             string sPatternOk = "\\d{3}.\\d{3}";
-            string sPatternDis = "$FREVE,SEN \\d{3}";
+            string sPatternDis = "EN \\d{3}";
             string write = "";  
        
             ///
@@ -138,6 +138,8 @@ namespace SerialPortListener.Serial
             Array.Resize(ref writeData, writeData.Length + 1);
             if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternDis))
             {
+                Array.Clear(writeData, 0, writeData.Length);
+                Array.Resize(ref writeData, writeData.Length + 1);
                 writeData[writeData.Length - 1] = "$FREVE,SEN*";
             }
             else if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternOk))
@@ -167,9 +169,9 @@ namespace SerialPortListener.Serial
                     summ ^= Convert.ToByte(write[i]);
                 }
                 write = sb.ToString();
-                Write(write + "<CR><LF>\r\n");
+                Write(write + "\r\n");
                 Array.Clear(writeData, 0, writeData.Length);
-                return ("\r\n" + write + "<CR><LF>\r\n");
+                return ("\r\n" + write + "\r\n");
             }
             else if (System.Text.RegularExpressions.Regex.IsMatch(data, sPatternDis))
             {
@@ -181,9 +183,9 @@ namespace SerialPortListener.Serial
                     summ ^= Convert.ToByte(write[i]);
                 }
                 write = sb.ToString();
-                Write(write + "<CR><LF>\r\n");
+                Write(write + "\r\n");
                 Array.Clear(writeData, 0, writeData.Length);
-                return ("\r\n" + write + "<CR><LF>\r\n");
+                return ("\r\n" + write + "\r\n");
             }
             else
             {

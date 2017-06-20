@@ -13,8 +13,8 @@ namespace SerialPortListener.Serial
     public class SerialSettings : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        string _portName = "";
-        string _outPortName = "";
+        string _portName = "COM3";
+        string _outPortName = "COM2";
         string[] _portNameCollection;
         string[] _outPortNameCollection;
         int _baudRate = 9600;
