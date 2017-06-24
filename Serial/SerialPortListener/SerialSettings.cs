@@ -5,6 +5,7 @@ using System.Text;
 using System.IO.Ports;
 using System.ComponentModel;
 
+
 namespace SerialPortListener.Serial
 {
     /// <summary>
@@ -13,10 +14,13 @@ namespace SerialPortListener.Serial
     public class SerialSettings : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        string _portName = "COM3";
-        string _outPortName = "COM2";
+        string _portName = "";
+        string _outPortName = "";
         string[] _portNameCollection;
         string[] _outPortNameCollection;
+        string _inPortNemeDefault = System.Configuration.ConfigurationSettings.AppSettings["inPortName"];
+        string _outPortNemeDefault = System.Configuration.ConfigurationSettings.AppSettings["outPortName"];
+        string _autoStart = System.Configuration.ConfigurationSettings.AppSettings["autoStart"];
         int _baudRate = 9600;
       //  int _outBaudRate = 9600;
         BindingList<int> _baudRateCollection = new BindingList<int>();
@@ -38,6 +42,30 @@ namespace SerialPortListener.Serial
                 if (!_portName.Equals(value))
                 {
                     _portName = value;
+                    SendPropertyChangedEvent("PortName");
+                }
+            }
+        }
+        public string inPortNemeDefault
+        {
+            get { return _inPortNemeDefault; }
+            set
+            {
+                if (!_inPortNemeDefault.Equals(value))
+                {
+                    _inPortNemeDefault = value;
+                    SendPropertyChangedEvent("PortName");
+                }
+            }
+        }
+        public string outPortNemeDefault
+        {
+            get { return _outPortNemeDefault; }
+            set
+            {
+                if (!_outPortNemeDefault.Equals(value))
+                {
+                    _outPortNemeDefault = value;
                     SendPropertyChangedEvent("PortName");
                 }
             }

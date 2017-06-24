@@ -9,18 +9,27 @@ using System.Windows.Forms;
 using SerialPortListener.Serial;
 using System.IO;
 using System.IO.Ports;
+using System.Configuration;
+
 
 namespace SerialPortListener
 {
     public partial class MainForm : Form
     {
         SerialPortManager _spManager;
+     //   private System.Windows.Forms.NotifyIcon notifyIcon1;
         public MainForm()
         {
             InitializeComponent();
 
             UserInitialization();
-
+/*
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            notifyIcon1.Icon = new Icon(this.Icon, 40, 40);
+            notifyIcon1.Text = "Плыву по течению";
+            notifyIcon1.Visible = true;
+            notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
+*/
         }
 
       
@@ -36,7 +45,6 @@ namespace SerialPortListener
             inStopBitsComboBox.DataSource = Enum.GetValues(typeof(System.IO.Ports.StopBits));
             outPortNameComboBox.DataSource = mySerialSettings.OutPortNameCollection;
             outBaudRateComboBox.DataSource = mySerialSettings.outBaudRateCollection;
-
             _spManager.NewSerialDataRecieved += new EventHandler<SerialDataEventArgs>(_spManager_NewSerialDataRecieved);
             this.FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
 
@@ -82,6 +90,7 @@ namespace SerialPortListener
                 btnStop.Enabled = true;
                 btnStart.Enabled = false;
                 _spManager.StartListening();
+               // this.WindowState = FormWindowState.Minimized;
             }
             else
             {
@@ -95,30 +104,64 @@ namespace SerialPortListener
             _spManager.StopListening();
             btnStart.Enabled = true;
             btnStop.Enabled = false;
+            
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            string testsr = "$jsdhfkjhsd,123,sdjhgsafd,sadfsdf,8*";
-            byte summ = 0;
-            StringBuilder sb = new StringBuilder();
-            for (int i = 1; i < testsr.Length-1; i++)
-            {
-                sb.Append((char)testsr[i]);
-                summ ^= Convert.ToByte(testsr[i]);
-            }
-            String result = sb.ToString();
-            tbData.AppendText(result + "\r\n" + summ.ToString() );
-        }
+
+         }
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (inPortNameComboBox.Text == "COM3" && outPortNameComboBox.Text == "COM2")
+            /// <summary>
+            /// Автозапуск программы с заданными портами
+            /// COM3 для входящего порта
+            /// COM2 для исходящего порта
+            /// </summary>
+
+            
+            _spManager = new SerialPortManager();
+            SerialSettings mySerialSettings = _spManager.CurrentSerialSettings;
+            serialSettingsBindingSource.DataSource = mySerialSettings;
+            if (mySerialSettings.PortNameCollection.Contains(mySerialSettings.inPortNemeDefault)) inPortNameComboBox.Text = mySerialSettings.inPortNemeDefault;
+            if (mySerialSettings.PortNameCollection.Contains(mySerialSettings.outPortNemeDefault)) outPortNameComboBox.Text = mySerialSettings.outPortNemeDefault;
+            if (inPortNameComboBox.Text == mySerialSettings.inPortNemeDefault && outPortNameComboBox.Text == mySerialSettings.outPortNemeDefault)
             {
                 btnStart.Enabled = false;
+                btnStop.Enabled = true;
                 _spManager.StartListening();
+                this.WindowState = FormWindowState.Minimized;
+                notifyIcon1.BalloonTipText = "Редирект портов запущен!";
+                notifyIcon1.BalloonTipIcon = ToolTipIcon.Info;
+                notifyIcon1.BalloonTipTitle = "Внимание!";
+                notifyIcon1.ShowBalloonTip(500);
             }
-        }   
+        }
+
+        private void notifyIcon1_DoubleClick(object Sender, EventArgs e)
+        {
+            // Show the form when the user double clicks on the notify icon.
+
+            // Set the WindowState to normal if the form is minimized.
+            if (this.WindowState == FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Normal;
+            // Activate the form.
+            this.Activate();
+        }
+
+        private void toolStripSettings_Click(object sender, EventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+                this.WindowState = FormWindowState.Normal;
+            // Activate the form.
+            this.Activate();
+        }
+
+        private void toolStripExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
 
       
     }
