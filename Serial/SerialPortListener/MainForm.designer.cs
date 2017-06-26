@@ -49,13 +49,12 @@
             this.label2 = new System.Windows.Forms.Label();
             this.outPotrNameLabel = new System.Windows.Forms.Label();
             this.outPortNameComboBox = new System.Windows.Forms.ComboBox();
-            this.button1 = new System.Windows.Forms.Button();
             this.portNameCollectionBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.toolStripExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripExit = new System.Windows.Forms.ToolStripMenuItem();
             this.serialSettingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             baudRateLabel = new System.Windows.Forms.Label();
             dataBitsLabel = new System.Windows.Forms.Label();
@@ -259,17 +258,6 @@
             this.outPortNameComboBox.Size = new System.Drawing.Size(121, 21);
             this.outPortNameComboBox.TabIndex = 0;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(366, 209);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 15;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Visible = false;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // portNameCollectionBindingSource
             // 
             this.portNameCollectionBindingSource.DataMember = "PortNameCollection";
@@ -281,6 +269,7 @@
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "Плыву по течению";
             this.notifyIcon1.Visible = true;
+            this.notifyIcon1.DoubleClick += new System.EventHandler(this.notifyIcon1_DoubleClick);
             // 
             // contextMenuStrip1
             // 
@@ -289,26 +278,26 @@
             this.toolStripSeparator1,
             this.toolStripExit});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(153, 76);
-            // 
-            // toolStripExit
-            // 
-            this.toolStripExit.Name = "toolStripExit";
-            this.toolStripExit.Size = new System.Drawing.Size(152, 22);
-            this.toolStripExit.Text = "Выход";
-            this.toolStripExit.Click += new System.EventHandler(this.toolStripExit_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(135, 54);
             // 
             // toolStripSettings
             // 
             this.toolStripSettings.Name = "toolStripSettings";
-            this.toolStripSettings.Size = new System.Drawing.Size(152, 22);
+            this.toolStripSettings.Size = new System.Drawing.Size(134, 22);
             this.toolStripSettings.Text = "Настройки";
             this.toolStripSettings.Click += new System.EventHandler(this.toolStripSettings_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(131, 6);
+            // 
+            // toolStripExit
+            // 
+            this.toolStripExit.Name = "toolStripExit";
+            this.toolStripExit.Size = new System.Drawing.Size(134, 22);
+            this.toolStripExit.Text = "Выход";
+            this.toolStripExit.Click += new System.EventHandler(this.toolStripExit_Click);
             // 
             // serialSettingsBindingSource
             // 
@@ -321,7 +310,6 @@
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.ClientSize = new System.Drawing.Size(476, 475);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.tbData);
             this.Controls.Add(this.btnStop);
@@ -363,7 +351,6 @@
         private System.Windows.Forms.ComboBox outBaudRateComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label outPotrNameLabel;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.BindingSource portNameCollectionBindingSource;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
